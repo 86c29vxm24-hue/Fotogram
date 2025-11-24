@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fotogram</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="#">
+      <!-- Logo liegt in ./img/ -->
+      <img src="./Fotogram_Logo.svg" id="logo" alt="Fotogram Logo">
+    </a>
+  </header>
+
+  <main>
+    <h1>Fotogram</h1>
+    <!-- Thumbnails kommen per JS -->
+    <section id="gallery"></section>
+  </main>
+
+ <dialog id="viewer">
+  <header class="viewer-head">
+    <div class="viewer-logo-box">
+      <img src="./Fotogram_Logo.svg" alt="Fotogram Logo" class="dialog-logo">
+      <p class="viewer-sub">Türkiye<br><span>it´s a feeling</span></p>
+    </div>
+    <button id="btnClose" aria-label="Schließen">✕</button>
+  </header>
+
+  <div class="viewer-body">
+    <img id="bigImg" alt="">
+  </div>
+
+  <footer class="viewer-foot">
+    <button id="btnPrev" aria-label="Vorheriges Bild">❮</button>
+    <span id="counter"></span>
+    <button id="btnNext" aria-label="Nächstes Bild">❯</button>
+  </footer>
+</dialog>
+
+
+  <footer>© 2025 Fotogram – Developer Akademie Projekt</footer>
+  <script src="script.js"></script>
+</body>
+</html>
