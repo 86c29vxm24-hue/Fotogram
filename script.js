@@ -26,9 +26,9 @@ let counter = document.getElementById("counter");
 let index = 0;
 
 // Bilder anzeigen
-for (let i = 0; i < bilder.length; i++) {
+for (let i = 0; i < IMGS.length; i++) {
   let img = document.createElement("img");
-  img.src = "./IMG/" + bilder[i];
+  img.src = "./IMG/" + IMGS[i];
   img.alt = "Bilder asu der Türkei ";
   img.onclick = function() {
     index = i;
@@ -39,8 +39,8 @@ for (let i = 0; i < bilder.length; i++) {
 
 // Großes Bild zeigen
 function updateViewer() {
-  bigImg.src = "./IMG/" + bilder[index];
-  counter.textContent = (index + 1) + " / " + bilder.length;
+  bigImg.src = "./IMG/" + IMGS[index];
+  counter.textContent = (index + 1) + " / " + IMGS.length;
 }
 
 // Dialog öffnen und schließen
@@ -59,14 +59,14 @@ function closeViewer() {
 btnPrev.onclick = function() {
   index = index - 1;
   if (index < 0) {
-    index = bilder.length - 1;
+    index = IMGS.length - 1;
   }
   updateViewer();
 };
 
 btnNext.onclick = function() {
   index = index + 1;
-  if (index >= bilder.length) {
+  if (index >= IMGS.length) {
     index = 0;
   }
   updateViewer();
