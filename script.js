@@ -1,5 +1,5 @@
 // Meine Bilder
-let bilder = [
+let IMGS = [
   "building-2397605_640.jpg",
   "cami-4793225_640.jpg",
   "cappadocia-765498_640.jpg",
