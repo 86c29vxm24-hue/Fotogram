@@ -29,6 +29,7 @@ let index = 0;
 for (let i = 0; i < bilder.length; i++) {
   let img = document.createElement("img");
   img.src = "./IMG/" + bilder[i];
+  img.alt = "Bilder asu der Türkei ";
   img.onclick = function() {
     index = i;
     openViewer();
