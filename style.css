@@ -1,4 +1,4 @@
-/* ===== dein vorhandenes Header-Design ===== */
+/* ===== Grundlayout ===== */
 body {
   margin: 0;
   background-color: rgb(3, 6, 50);
@@ -6,34 +6,52 @@ body {
   color: #fff;
 }
 
-header{
+header {
   height: 100px;
   width: 100%;
   display: flex;
-  justify-content:flex-start;
-  align-items: end;
+  justify-content: flex-start;
+  align-items: flex-end;
   box-shadow: 1px 1px 10px #888888;
   padding-bottom: 10px;
   background-color: rgb(3, 8, 78);
 }
 
-#logo{
+#logo {
   height: 80px;
   width: auto;
   margin-left: 20px;
 }
 
 /* ===== Seite / Überschrift ===== */
-main { max-width: 1200px; margin: 0 auto; padding: 24px; }
-h1 { margin: 12px 0 16px; }
+main { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 24px; 
+}
+
+.intro h1 { 
+  margin: 12px 0 8px; 
+}
+
+.intro p {
+  margin-top: 0;
+  opacity: 0.9;
+}
 
 /* ===== Galerie (Thumbnails) ===== */
 #gallery {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0 40px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  padding: 10px 0 40px;
+}
+
+.photo-card figure {
+  margin: 0;
 }
 
 #gallery img {
@@ -44,6 +62,14 @@ h1 { margin: 12px 0 16px; }
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease;
   background: #111;
+  display: block;
+}
+
+#gallery figcaption {
+  font-size: 12px;
+  margin-top: 4px;
+  text-align: center;
+  opacity: 0.8;
 }
 
 #gallery img:hover {
@@ -53,40 +79,86 @@ h1 { margin: 12px 0 16px; }
 
 /* ===== Dialog (Großansicht) ===== */
 #viewer {
+  margin: auto;
   border: none;
   border-radius: 16px;
   padding: 16px 56px;
   background: rgb(3, 8, 78);
   color: #fff;
-  max-width: min(92vw, 900px);
+  box-sizing: border-box;
+  width: min(92vw, 900px);
+  height: min(90vh, 700px);
   transform: translateY(10px);
   transition: transform .2s ease, opacity .2s ease;
   opacity: 0;
+  display: flex;
+  flex-direction: column;
 }
-#viewer.opened { transform: translateY(0); opacity: 1; }
-#viewer::backdrop { background: rgba(0,0,0,.7); }
 
+#viewer.opened { 
+  transform: translateY(0); 
+  opacity: 1; 
+}
+
+#viewer::backdrop { 
+  background: rgba(0,0,0,.7); 
+}
+
+/* ===== Dialog Kopf & Fuß ===== */
 .viewer-head,
 .viewer-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-shrink: 0;
 }
 
+/* ===== Dialog Body ===== */
 .viewer-body {
-  display: flex; justify-content: center; margin: 12px 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  margin: 12px 0;
+  overflow: hidden;
 }
 
+.viewer-body figure {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Großes Bild ===== */
 #bigImg {
   max-width: 100%;
-  max-height: 70vh;
+  max-height: calc(100% - 48px);
+  object-fit: contain;
   border-radius: 12px;
   display: block;
   background: #0b0b0b;
+  margin: 0 auto;
 }
 
-#btnClose, #btnPrev, #btnNext {
+/* ===== Caption im Viewer ===== */
+#viewerCaption {
+  margin-top: 8px;
+  font-size: 14px;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+/* ===== Buttons im Dialog ===== */
+#btnClose,
+#btnPrev,
+#btnNext {
   background: #fff;
   color: #0b1a3a;
   border: none;
@@ -96,64 +168,33 @@ h1 { margin: 12px 0 16px; }
   box-shadow: 0 8px 24px rgba(0,0,0,.25);
   font-size: 18px;
 }
-#btnPrev, #btnNext { border-radius: 50%; width: 44px; height: 44px; padding: 0; }
-#counter { opacity: .85; min-width: 80px; text-align: center; }
 
-footer { text-align: center; opacity: .6; padding: 16px; }
-
-
-/* ===== Logo im Dialog ===== */
-.dialog-logo {
-  height: 40px;
-  margin: 0 auto;
-  display: block;
+#btnPrev,
+#btnNext { 
+  border-radius: 50%; 
+  width: 44px; 
+  height: 44px; 
+  padding: 0; 
 }
 
-/* ===== Kopfbereich vom Dialog ===== */
-.viewer-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  position: relative;
+#counter { 
+  opacity: .85; 
+  min-width: 80px; 
+  text-align: center; 
 }
 
-/* ===== Schließen-Button  ===== */
-#btnClose {
-  background: none;      
-  border: none;         
-  color: white;          
-  font-size: 28px;       
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  padding: 0;            
-  outline: none;         
-}
-
-#btnClose:hover {
-  color: #ff5555;        
-}
-#btnClose:focus {
-  outline: none;         
-}
-
-/* Logo und Text untereinander zentrieren */
+/* ===== Dialog Logo + Untertitel ===== */
 .viewer-logo-box {
   text-align: center;
   flex-grow: 1;
 }
 
-/* Logo selbst */
 .dialog-logo {
   height: 40px;
-  display: block;
   margin: 0 auto 4px;
+  display: block;
 }
 
-/* Text unter dem Logo */
 .viewer-sub {
   color: white;
   font-family: "Arial", sans-serif;
@@ -162,9 +203,82 @@ footer { text-align: center; opacity: .6; padding: 16px; }
   margin: 0;
   line-height: 1.2;
 }
+
 .viewer-sub span {
   display: block;
   font-weight: 400;
   font-size: 13px;
   opacity: 0.9;
+}
+
+/* ===== Schließen-Button ===== */
+#btnClose {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  padding: 0;
+  outline: none;
+}
+
+#btnClose:hover {
+  color: #ff5555;
+}
+
+#btnClose:focus {
+  outline: none;
+}
+
+/* ===== aside ===== */
+aside#about {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  opacity: 0.9;
+}
+
+/* ===== Footer ===== */
+footer { 
+  text-align: center; 
+  opacity: .6; 
+  padding: 16px; 
+}
+
+/* ===== Responsive Header / Logo oben ===== */
+@media (max-width: 500px) {
+  #logo {
+    height: 55px;   
+    margin-left: 10px; 
+  }
+
+  header {
+    height: 70px;   
+    padding-bottom: 6px;
+  }
+}
+
+/* ===== Responsive Dialog Logo ===== */
+@media (max-width: 600px) {
+  #viewer {
+    padding: 12px 24px;
+    height: 75vh;
+  }
+
+  .dialog-logo {
+    height: 26px;
+    margin-bottom: 2px;
+  }
+
+  .viewer-sub {
+    font-size: 12px;
+  }
+
+  .viewer-sub span {
+    font-size: 11px;
+  }
 }

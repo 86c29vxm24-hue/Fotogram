@@ -1,5 +1,5 @@
 // Meine Bilder
-let IMGS = [
+const IMGS = [
   "building-2397605_640.jpg",
   "cami-4793225_640.jpg",
   "cappadocia-765498_640.jpg",
@@ -14,42 +14,77 @@ let IMGS = [
   "turkiye-7383043_640.jpg"
 ];
 
+// Manuelle Beschreibungen (gleiche Reihenfolge!)
+const CAPTIONS = [
+  "Mevlana/Konya",
+  "Mosque/Istanbul",
+  "Balloons/Cappadocia",
+  "Beach/Antalya",
+  "Lake/Bolu",
+  "Lamps/Istanbul",
+  "Lighthouse/Finike",
+  "Kelebekler Vadisi/Fethiye",
+  "Travertine Terraces/Pamukkale",
+  "Pool of Sacred Fish/Sanliurfa",
+  "Sumela/Trabzon",
+  "Streets of Istanbul/Istanbul"
+];
+
 // Elemente holen
-let gallery = document.getElementById("gallery");
-let viewer = document.getElementById("viewer");
-let bigImg = document.getElementById("bigImg");
-let btnPrev = document.getElementById("btnPrev");
-let btnNext = document.getElementById("btnNext");
-let btnClose = document.getElementById("btnClose");
-let counter = document.getElementById("counter");
+const gallery = document.getElementById("gallery"); // <ul>
+const viewer = document.getElementById("viewer");
+const bigImg = document.getElementById("bigImg");
+const viewerCaption = document.getElementById("viewerCaption");
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
+const btnClose = document.getElementById("btnClose");
+const counter = document.getElementById("counter");
 
 let index = 0;
 
-// Bilder anzeigen (Thumbnails)
+// Thumbnails als Liste anzeigen
 for (let i = 0; i < IMGS.length; i++) {
-  let img = document.createElement("img");
+  // <li>
+  const li = document.createElement("li");
+  li.className = "gallery-item";
+
+  // <article>
+  const article = document.createElement("article");
+  article.className = "photo-card";
+
+  // <figure>
+  const figure = document.createElement("figure");
+
+  // <img>
+  const img = document.createElement("img");
   img.src = "./IMG/" + IMGS[i];
-  img.alt = "Bild aus der Türkei";
+  img.alt = CAPTIONS[i]; // Alt-Text = deine Beschreibung
   img.onclick = function () {
     index = i;
     openViewer();
   };
-  gallery.appendChild(img);
+
+  // <figcaption>
+  const figcaption = document.createElement("figcaption");
+  figcaption.textContent = CAPTIONS[i];
+
+  // zusammenbauen
+  figure.appendChild(img);
+  figure.appendChild(figcaption);
+  article.appendChild(figure);
+  li.appendChild(article);
+  gallery.appendChild(li);
 }
 
-// Großes Bild zeigen
+// Großes Bild im Dialog aktualisieren
 function updateViewer() {
   bigImg.src = "./IMG/" + IMGS[index];
-  bigImg.alt = "Bild aus der Türkei groß";
+  bigImg.alt = CAPTIONS[index];
   counter.textContent = (index + 1) + " / " + IMGS.length;
-
-  // Klicks auf das große Bild sollen NICHT das Schließen auslösen
-  bigImg.onclick = function (e) {
-    e.stopPropagation();
-  };
+  viewerCaption.textContent = CAPTIONS[index];
 }
 
-// Dialog öffnen und schließen
+// Dialog öffnen / schließen
 function openViewer() {
   updateViewer();
   viewer.showModal();
@@ -61,42 +96,33 @@ function closeViewer() {
   viewer.classList.remove("opened");
 }
 
-// Buttons (Endlos-Schleife + kein Event-Bubbling nach oben)
-btnPrev.onclick = function (e) {
-  e.stopPropagation();      // verhindert, dass viewer.onclick mit ausgelöst wird
+// Links-Button (Endlos-Schleife)
+btnPrev.onclick = function () {
   index = index - 1;
   if (index < 0) {
-    index = IMGS.length - 1;  // von Bild 1 zurück → letztes Bild
+    index = IMGS.length - 1;
   }
   updateViewer();
 };
 
-btnNext.onclick = function (e) {
-  e.stopPropagation();
+// Rechts-Button (Endlos-Schleife)
+btnNext.onclick = function () {
   index = index + 1;
   if (index >= IMGS.length) {
-    index = 0;               // von letztem Bild weiter → erstes Bild
+    index = 0;
   }
   updateViewer();
 };
 
-btnClose.onclick = function (e) {
-  e.stopPropagation();
+// X-Button
+btnClose.onclick = function () {
   closeViewer();
-};
-
-// Wenn man außerhalb klickt, schließen
-viewer.onclick = function (e) {
-  // Nur schließen, wenn wirklich auf den Dialog-Hintergrund geklickt wird
-  if (e.target === viewer) {
-    closeViewer();
-  }
 };
 
 // Tastatursteuerung
 document.onkeydown = function (e) {
   if (!viewer.open) return;
-  if (e.key === "ArrowRight") btnNext.onclick(e);
-  if (e.key === "ArrowLeft") btnPrev.onclick(e);
+  if (e.key === "ArrowRight") btnNext.onclick();
+  if (e.key === "ArrowLeft") btnPrev.onclick();
   if (e.key === "Escape") closeViewer();
 };
